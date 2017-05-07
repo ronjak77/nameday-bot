@@ -90,17 +90,19 @@ function receivedMessage(event) {
 
   // --------------
 
-  request({
+  request.post({
     uri: 'https://translation.googleapis.com/language/translate/v2?key=' + process.env.TRANSLATE_API_KEY,
     qs: {
-      'q': message.text,
+      'q': "helmikuun toinen",
       'target': 'en'
-    }
+    },
+
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log("response:" + response);
     } else {
       console.error("Unable to receive translation.");
+      console.error(response);
       console.error(error);
     }
   });
