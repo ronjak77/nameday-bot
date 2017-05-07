@@ -100,9 +100,9 @@ function receivedMessage(event) {
 
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      // var JSONresp = JSON.parse(response);
+      var JSONresp = JSON.parse(body);
       console.log("response:" + response);
-      console.log("body:" + body);
+      console.log("body data:" + JSONresp.data);
       // console.log("response data:" + JSONresp.data.translations[0].translatedText);
     } else {
       console.error("Unable to receive translation.");
