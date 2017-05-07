@@ -99,12 +99,12 @@ function receivedMessage(event) {
       request({
         uri: 'https://nimiapi.herokuapp.com/' + scope,
         qs: {
-          api_key: '123456'
+          api_key: process.env.NAME_API_KEY
         }
       }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           messageContent = body;
-          console.log(body);
+          console.log("nimipäivä_ : " + body);
         } else {
           console.error("Unable to receive nameday info.");
           console.error(response);
