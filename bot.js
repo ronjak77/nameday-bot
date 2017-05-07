@@ -91,6 +91,8 @@ function receivedMessage(event) {
 
   // --------------
 
+  var messageContent = "";
+
   request.post({
     uri: 'https://translation.googleapis.com/language/translate/v2?key=' + process.env.TRANSLATE_API_KEY,
     qs: {
@@ -101,43 +103,16 @@ function receivedMessage(event) {
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var JSONresp = JSON.parse(body);
-      console.log("response:" + response);
-      console.log("body data:" + JSONresp.data.translations[0].translatedText);
-      // console.log("response data:" + JSONresp.data.translations[0].translatedText);
-    } else {
-      console.error("Unable to receive translation.");
-      console.error(response);
-      console.error(error);
-    }
-  });
+      console.log("translation data:" + JSONresp.data.translations[0].translatedText);
 
-  // --------------
-  var messageId = message.mid;
+      var chronoDate = chrono.parseDate(JSONresp.data.translations[0].translatedText);
 
-  var messageText = message.text;
-  var messageAttachments = message.attachments;
-
-  var messageContent = "";
-
-  var chronoDate = chrono.parseDate("February 2nd");
-  console.log("chronodaate: " + chronoDate);
-  console.log("Cmonth: " + chronoDate.getMonth() + 1);
-  console.log("Cday: " + chronoDate.getDate());
-
-  var today = new Date();
-  var month = today.getMonth() + 1;
-  var day = 13;
-
-  if(messageText) {
-    if (messageText.indexOf("huomenna") >= 0) {
-      day = today.addDays(1).getDate();
-    }
-    if (messageText.indexOf("nyt") >= 0) {
-      day = today.getDate();
-    }
+      console.log("chronodaate: " + chronoDate);
+      console.log("Cmonth: " + chronoDate.getMonth() + 1);
+      console.log("Cday: " + chronoDate.getDate());
 
       request({
-        uri: 'https://nimiapi.herokuapp.com/' + month + "/" + day,
+        uri: 'https://nimiapi.herokuapp.com/' + chronoDate.getMonth() + 1 + "/" + chronoDate.getDate(),
         qs: {
           api_key: process.env.NAME_API_KEY
         }
@@ -157,7 +132,17 @@ function receivedMessage(event) {
         sendTextMessage(senderID, messageContent);
 
       });
-  }
+
+
+    } else {
+      console.error("Unable to receive translation.");
+      console.error(response);
+      console.error(error);
+    }
+  });
+
+  // --------------
+
 }
 
 function receivedPostback(event) {
