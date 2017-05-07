@@ -124,8 +124,8 @@ function receivedMessage(event) {
       }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           var jsonBody = JSON.parse(body);
-          var emoticons = "💐🍀👍👏😄☺🌻🌼🌷🌹🌸";
-          var emoticon = emoticons.charAt(Math.floor(Math.random() * emoticons.length));
+          var emoticons = ["💐", "🍀", "👍", "👏", "😄", "☺", "🌻", "🌼", "🌷", "🌹", "🌸"];
+          var emoticon = emoticons[(Math.floor(Math.random() * emoticons.length))];
           messageContent = emoticon + " " + apologyText + "Nimipäiviään viettävät " + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". " + emoticon;
           sendTextMessage(senderID, messageContent);
         } else {
