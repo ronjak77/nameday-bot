@@ -130,7 +130,7 @@ function sendTextMessage(recipientId, messageText) {
     }
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      message = body;
+      messageContent = body;
       console.log(body);
     } else {
       console.error("Unable to receive nameday info.");
