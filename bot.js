@@ -106,12 +106,15 @@ function receivedMessage(event) {
       console.log("translation data:" + JSONresp.data.translations[0].translatedText);
 
       var chronoDate = chrono.parseDate(JSONresp.data.translations[0].translatedText);
+      var apologyText = "";
 
-      console.log("chronodaate: " + chronoDate);
+      if(chronoDate == null) {
+        chronoDate = new Date();
+        apologyText = "En ihan nyt ymmärtänyt, mutta yritän kovasti! ";
+      }
+
       var cmonth = chronoDate.getMonth() + 1;
       var cdate = chronoDate.getDate();
-      console.log("Cmonth: " + cmonth);
-      console.log("Cday: " + cdate);
 
       request({
         uri: 'https://nimiapi.herokuapp.com/' + cmonth + "/" + cdate,
@@ -122,7 +125,8 @@ function receivedMessage(event) {
         if (!error && response.statusCode == 200) {
           var jsonBody = JSON.parse(body);
           var emoticons = "💐🍀👍👏😄☺🌻🌼🌷🌹🌸";
-          messageContent = "Nimipäiviään viettävät " + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". Onnea! 💐";
+          var emoticon = emoticons.charAt(Math.floor(Math.random() * emoticons.length));
+          messageContent = emoticon + " " + apologyText + "Nimipäiviään viettävät " + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". " + emoticon;
           sendTextMessage(senderID, messageContent);
         } else {
           console.error("Unable to receive nameday info.");
