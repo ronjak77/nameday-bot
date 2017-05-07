@@ -69,6 +69,14 @@ app.post('/webhook', function (req, res) {
   }
 });
 
+
+Date.prototype.addDays = function(days) {
+  var dat = new Date(this.valueOf());
+  dat.setDate(dat.getDate() + days);
+  return dat;
+}
+
+
 // Incoming events handling
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -86,18 +94,20 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   var messageContent = "";
-  var scope = "tomorrow";
+  var today = new Date();
+  var month = today.getMonth() + 1;
+  var day = 13;
 
   if(messageText) {
     if (messageText.indexOf("huomenna") >= 0) {
-      scope = "tomorrow";
+      day = today.addDays(1).getDate();
     }
     if (messageText.indexOf("nyt") >= 0) {
-      scope = "today";
+      day = today.getDate();
     }
 
       request({
-        uri: 'https://nimiapi.herokuapp.com/' + scope,
+        uri: 'https://nimiapi.herokuapp.com/' + month + "/" + day,
         qs: {
           api_key: process.env.NAME_API_KEY
         }
