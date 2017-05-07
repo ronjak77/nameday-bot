@@ -104,7 +104,7 @@ function receivedMessage(event) {
       }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           messageContent = body;
-          console.log("nimipäivä_ : " + body.name);
+          console.log("nimipäivä_ : " + body["name"]);
         } else {
           console.error("Unable to receive nameday info.");
           console.error(response);
