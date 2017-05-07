@@ -126,7 +126,11 @@ function receivedMessage(event) {
           var jsonBody = JSON.parse(body);
           var emoticons = ["💐", "🍀", "👍", "👏", "😄", "☺", "🌻", "🌼", "🌷", "🌹", "🌸"];
           var emoticon = emoticons[(Math.floor(Math.random() * emoticons.length))];
-          messageContent = emoticon + " " + apologyText + "Nimipäiviään viettävät " + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". " + emoticon;
+          var verb = "viettävät ";
+          if(jsonBody.name.length < 2) {
+            verb = "viettää ";
+          }
+          messageContent = emoticon + " " + apologyText + "Nimipäiviään " + verb + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". " + emoticon;
           sendTextMessage(senderID, messageContent);
         } else {
           console.error("Unable to receive nameday info.");
