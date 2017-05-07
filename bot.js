@@ -86,11 +86,18 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   var messageContent = "No message";
+  var scope = "tomorrow";
 
-  if (messageText) {
+  if(messageText) {
+    if (messageText.indexOf("huomenna") >= 0) {
+      scope = "tomorrow";
+    }
+    if (messageText.indexOf("nyt") >= 0) {
+      scope = "today";
+    }
 
       request({
-        uri: 'https://nimiapi.herokuapp.com/tomorrow',
+        uri: 'https://nimiapi.herokuapp.com/' + scope,
         qs: {
           api_key: '123456'
         }
@@ -104,10 +111,9 @@ function receivedMessage(event) {
           console.error(error);
         }
 
+        sendTextMessage(senderID, messageContent);
 
       });
-
-    sendTextMessage(senderID, messageContent);
   }
 }
 
