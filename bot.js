@@ -120,7 +120,8 @@ function receivedMessage(event) {
 
   var chronoDate = chrono.parseDate("February 2nd");
   console.log("chronodaate: " + chronoDate);
-  console.log("Cmonth: " + chronoDate.getMonth());
+  console.log("Cmonth: " + chronoDate.getMonth() + 1);
+  console.log("Cday: " + chronoDate.getDate());
 
   var today = new Date();
   var month = today.getMonth() + 1;
