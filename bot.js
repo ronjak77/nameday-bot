@@ -91,7 +91,7 @@ function receivedMessage(event) {
 
   // --------------
 
-  var messageContent = "";
+  var messageContent = "Pahoittelut, ongelma!";
 
   request.post({
     uri: 'https://translation.googleapis.com/language/translate/v2?key=' + process.env.TRANSLATE_API_KEY,
@@ -123,13 +123,15 @@ function receivedMessage(event) {
           //   messageContent = messageContent + jsonBody.name[i] + " ";
           // }
           messageContent = "Nimipäiviään viettävät silloin " + jsonBody.name;
+          sendTextMessage(senderID, messageContent);
         } else {
           console.error("Unable to receive nameday info.");
           console.error(response);
           console.error(error);
+          sendTextMessage(senderID, "Unable to receive nameday info.");
         }
 
-        sendTextMessage(senderID, messageContent);
+
 
       });
 
