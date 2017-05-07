@@ -100,8 +100,9 @@ function receivedMessage(event) {
 
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log("response:" + response);
-      console.log("response data:" + response.data);
+      var JSONresp = JSON.parse(response);
+      console.log("response:" + JSONresp);
+      console.log("response data:" + JSONresp.data.translations[0].translatedText);
     } else {
       console.error("Unable to receive translation.");
       console.error(response);
@@ -119,7 +120,7 @@ function receivedMessage(event) {
 
   var chronoDate = chrono.parseDate("February 2nd");
   console.log("chronodaate: " + chronoDate);
-  console.log("Cmonth: " + chronoDate.getMonth);
+  console.log("Cmonth: " + chronoDate.getMonth());
 
   var today = new Date();
   var month = today.getMonth() + 1;
