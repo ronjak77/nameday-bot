@@ -122,6 +122,7 @@ function receivedPostback(event) {
 // Sending helpers
 //////////////////////////
 function sendTextMessage(recipientId, messageText) {
+  var messageContent = "No message";
   request({
     uri: 'https://nimiapi.herokuapp.com/tomorrow',
     qs: {
@@ -129,7 +130,7 @@ function sendTextMessage(recipientId, messageText) {
     }
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      messageText = body;
+      message = body;
       console.log(body);
     } else {
       console.error("Unable to receive nameday info.");
@@ -143,7 +144,7 @@ function sendTextMessage(recipientId, messageText) {
       id: recipientId
     },
     message: {
-      text: messageText
+      text: messageContent
     }
   };
 
