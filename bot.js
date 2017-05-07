@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const path = require('path');
 var messengerButton = "<html><head><title>Facebook Messenger Bot</title></head><body><h1>Facebook Messenger Bot</h1>This is a bot based on Messenger Platform QuickStart. For more details, see their <a href=\"https://developers.facebook.com/docs/messenger-platform/guides/quick-start\">docs</a>.<script src=\"https://button.glitch.me/button.js\" data-style=\"glitch\"></script><div class=\"glitchButton\" style=\"position:fixed;top:20px;right:20px;\"></div></body></html>";
+var chrono = require('chrono-node');
 
 // The rest of the code implements the routes for our Express server.
 let app = express();
@@ -93,13 +94,15 @@ function receivedMessage(event) {
   request.post({
     uri: 'https://translation.googleapis.com/language/translate/v2?key=' + process.env.TRANSLATE_API_KEY,
     qs: {
-      'q': "helmikuun toinen",
+      'q': message.text,
       'target': 'en'
     },
 
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log("response:" + response);
+      console.log("response data:" + response.data.translations[0].translatedText);
+      chrono.parseDate(response.data.translations[0].translatedText);
+
     } else {
       console.error("Unable to receive translation.");
       console.error(response);
