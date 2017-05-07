@@ -121,18 +121,13 @@ function receivedMessage(event) {
       }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           var jsonBody = JSON.parse(body);
-          var nimilista = "";
-          for (var i = jsonBody.name.length - 1; i >= 0; i--) {
-            nimilista = nimilista + jsonBody.name[i] + " ";
-          }
-
-          messageContent = "Nimipäiviään viettävät " + cdate + "." + cmonth + ". " + nimilista;
+          messageContent = "Nimipäiviään viettävät " + cdate + "." + cmonth + ". :" + jsonBody.name.join(', ');
           sendTextMessage(senderID, messageContent);
         } else {
           console.error("Unable to receive nameday info.");
           console.error(response);
           console.error(error);
-          sendTextMessage(senderID, "Unable to receive nameday info.");
+          sendTextMessage(senderID, "Virhe nimipäivätietojen haussa!");
         }
 
 
