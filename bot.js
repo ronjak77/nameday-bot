@@ -108,11 +108,13 @@ function receivedMessage(event) {
       var chronoDate = chrono.parseDate(JSONresp.data.translations[0].translatedText);
 
       console.log("chronodaate: " + chronoDate);
-      console.log("Cmonth: " + chronoDate.getMonth() + 1);
-      console.log("Cday: " + chronoDate.getDate());
+      var cmonth = chronoDate.getMonth() + 1;
+      var cdate = chronoDate.getDate();
+      console.log("Cmonth: " + cmonth);
+      console.log("Cday: " + cdate);
 
       request({
-        uri: 'https://nimiapi.herokuapp.com/' + chronoDate.getMonth() + 1 + "/" + chronoDate.getDate(),
+        uri: 'https://nimiapi.herokuapp.com/' + cmonth + "/" + cdate,
         qs: {
           api_key: process.env.NAME_API_KEY
         }
