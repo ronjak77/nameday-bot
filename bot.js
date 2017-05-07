@@ -137,18 +137,20 @@ function sendTextMessage(recipientId, messageText) {
       console.error(response);
       console.error(error);
     }
+
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: messageContent
+      }
+    };
+
+    callSendAPI(messageData);
   });
 
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: messageContent
-    }
-  };
 
-  callSendAPI(messageData);
 }
 
 function sendGenericMessage(recipientId) {
