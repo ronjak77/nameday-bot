@@ -121,7 +121,8 @@ function receivedMessage(event) {
       }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           var jsonBody = JSON.parse(body);
-          messageContent = "Nimipäiviään viettävät " + cdate + "." + cmonth + ". :" + jsonBody.name.join(', ');
+          var emoticons = "💐🍀👍👏😄☺🌻🌼🌷🌹🌸";
+          messageContent = "Nimipäiviään viettävät " + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". Onnea! 💐";
           sendTextMessage(senderID, messageContent);
         } else {
           console.error("Unable to receive nameday info.");
