@@ -1,0 +1,16 @@
+{
+  "name": "nimibot",
+  "version": "1.0.0",
+  "description": "Messenger nameday bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "*",
+    "request": "^2.72.0",
+    "body-parser": "*"
+  }
+}
