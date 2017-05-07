@@ -110,7 +110,7 @@ function receivedMessage(event) {
 
       if(chronoDate == null) {
         chronoDate = new Date();
-        apologyText = "En ihan nyt ymmärtänyt, mutta yritän kovasti! ";
+        apologyText = "En ihan nyt ymmärtänyt, mutta yritän kovasti! 😥 ";
       }
 
       var cmonth = chronoDate.getMonth() + 1;
@@ -126,11 +126,11 @@ function receivedMessage(event) {
           var jsonBody = JSON.parse(body);
           var emoticons = ["💐", "🍀", "👍", "👏", "😄", "☺", "🌻", "🌼", "🌷", "🌹", "🌸"];
           var emoticon = emoticons[(Math.floor(Math.random() * emoticons.length))];
-          var verb = "viettävät ";
+          var phrase = "Nimipäiviään viettävät ";
           if(jsonBody.name.length < 2) {
-            verb = "viettää ";
+            phrase = "Nimipäiväänsä viettää ";
           }
-          messageContent = emoticon + " " + apologyText + "Nimipäiviään " + verb + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". " + emoticon;
+          messageContent = apologyText + phrase + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". " + emoticon;
           sendTextMessage(senderID, messageContent);
         } else {
           console.error("Unable to receive nameday info.");
