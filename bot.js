@@ -85,7 +85,7 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
-  var messageContent = "No message";
+  var messageContent = "";
   var scope = "tomorrow";
 
   if(messageText) {
@@ -104,10 +104,10 @@ function receivedMessage(event) {
       }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           var jsonBody = JSON.parse(body);
-          messageContent = jsonBody;
-
-          console.log("body_ : " + jsonBody);
-          console.log("nimipäivä_ : " + jsonBody.name);
+          // for (var i = jsonBody.name.length - 1; i >= 0; i--) {
+          //   messageContent = messageContent + jsonBody.name[i] + " ";
+          // }
+          messageContent = "Nimipäiviään viettävät silloin " + jsonBody.name;
         } else {
           console.error("Unable to receive nameday info.");
           console.error(response);
