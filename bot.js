@@ -88,6 +88,26 @@ function receivedMessage(event) {
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
+  // --------------
+
+  request({
+    uri: 'https://translation.googleapis.com/language/translate/v2?key=' + process.env.TRANSLATE_API_KEY,
+    qs: {
+      'q': message,
+      'target': 'en'
+    }
+  }, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log("response:" + response);
+      console.log("body:" + body);
+    } else {
+      console.error("Unable to receive translation.");
+      console.error(response);
+      console.error(error);
+    }
+  });
+
+  // --------------
   var messageId = message.mid;
 
   var messageText = message.text;
