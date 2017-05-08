@@ -92,7 +92,10 @@ function receivedMessage(event) {
   if(message.text.toLowerCase().indexOf("milloin") >= 0) {
     console.log("Nimen kysyntä");
   } else if(message.text.match(/([0-9.])+/g) != null) {
-    console.log("suoraan päivämäärällä");
+
+    var chronoDate = chrono.parseDate(message.text);
+    sendDateBasedMessage(chronoDate, senderID);
+
   } else {
     var messageContent = "Pahoittelut, ongelma!";
 
@@ -132,35 +135,8 @@ function receivedMessage(event) {
               sendTextMessage(senderID, "Virhe päivän tulkinnassa ja nimen haussa!");
             }
           });
-
-
         } else {
-          var cmonth = chronoDate.getMonth() + 1;
-          var cdate = chronoDate.getDate();
-
-          request({
-            uri: 'https://nimiapi.herokuapp.com/' + cmonth + "/" + cdate,
-            qs: {
-              api_key: process.env.NAME_API_KEY
-            }
-          }, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-              var jsonBody = JSON.parse(body);
-              var emoticons = ["💐", "🍀", "👍", "👏", "😄", "☺", "🌻", "🌼", "🌷", "🌹", "🌸"];
-              var emoticon = emoticons[(Math.floor(Math.random() * emoticons.length))];
-              var phrase = "Nimipäiviään viettävät ";
-              if(jsonBody.name.length < 2) {
-                phrase = "Nimipäiväänsä viettää ";
-              }
-              messageContent = phrase + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". " + emoticon;
-              sendTextMessage(senderID, messageContent);
-            } else {
-              console.error("Unable to receive nameday info.");
-              console.error(response);
-              console.error(error);
-              sendTextMessage(senderID, "Virhe nimipäivätietojen haussa!");
-            }
-          });
+          sendDateBasedMessage(chronoDate);
         }
       } else {
         console.error("Unable to receive translation.");
@@ -169,6 +145,36 @@ function receivedMessage(event) {
       }
     });
   }
+}
+
+function sendDateBasedMessage(chronoDate, senderID) {
+  var cmonth = chronoDate.getMonth() + 1;
+  var cdate = chronoDate.getDate();
+  var messageContent = "";
+
+  request({
+    uri: 'https://nimiapi.herokuapp.com/' + cmonth + "/" + cdate,
+    qs: {
+      api_key: process.env.NAME_API_KEY
+    }
+  }, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var jsonBody = JSON.parse(body);
+      var emoticons = ["💐", "🍀", "👍", "👏", "😄", "☺", "🌻", "🌼", "🌷", "🌹", "🌸"];
+      var emoticon = emoticons[(Math.floor(Math.random() * emoticons.length))];
+      var phrase = "Nimipäiviään viettävät ";
+      if(jsonBody.name.length < 2) {
+        phrase = "Nimipäiväänsä viettää ";
+      }
+      messageContent = phrase + cdate + "." + cmonth + ". " + jsonBody.name.join(', ') + ". " + emoticon;
+      sendTextMessage(senderID, messageContent);
+    } else {
+      console.error("Unable to receive nameday info.");
+      console.error(response);
+      console.error(error);
+      sendTextMessage(senderID, "Virhe nimipäivätietojen haussa!");
+    }
+  });
 }
 
 function receivedPostback(event) {
