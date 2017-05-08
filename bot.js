@@ -98,7 +98,9 @@ function receivedMessage(event) {
     console.log(stripped);
     stripped = stripped.replace(/nimipäivä/g, '');
     console.log(stripped);
-    stripped = stripped.replace(/on/g, '');
+    stripped = stripped.replace(/ on/g, '');
+    stripped = stripped.replace(/ /g, '');
+
     console.log(stripped);
 
     sendNameBasedMessage(stripped, senderID);
