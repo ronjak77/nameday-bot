@@ -91,9 +91,13 @@ function receivedMessage(event) {
 
   if(message.text.toLowerCase().indexOf("milloin") >= 0) {
     console.log("Nimen kysyntä");
-  } else if(message.text.match(/([0-9.])+/g) != null) {
-
-    var chronoDate = chrono.parseDate(message.text);
+  } else if(message.text.match(/([0-9][.][0-9])+/g) != null) {
+    var month = message.text.split('.')[0];
+    var day = message.text.split('.')[1];
+    if( 0 < month < 13 ) {
+      var parseString = month + " " + day + " 2014";
+      var chronoDate = new Date(parseString);
+    }
     sendDateBasedMessage(chronoDate, senderID);
 
   } else {
@@ -148,6 +152,9 @@ function receivedMessage(event) {
 }
 
 function sendDateBasedMessage(chronoDate, senderID) {
+  if(chronoDate == null) {
+    sendTextMessage(senderID, "Virhe päivätietojen haussa!");
+  };
   var cmonth = chronoDate.getMonth() + 1;
   var cdate = chronoDate.getDate();
   var messageContent = "";
