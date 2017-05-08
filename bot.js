@@ -111,6 +111,13 @@ function receivedMessage(event) {
       if(letter == "k" || letter == "p" || letter == "t") {
         console.log("match");
         // todo duplicate
+        var firstpart = attempt.substring(0, attempt.length-2);
+        console.log("firstpart " + firstpart)
+        firstpart = firstpart + letter + attempt[attempt.length-1];
+        console.log(firstpart);
+        stripped = firstpart;
+      } else {
+        stripped = attempt;
       }
     }
 
