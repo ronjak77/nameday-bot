@@ -89,7 +89,7 @@ function receivedMessage(event) {
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
-  if(message.text.toLower().indexOf("milloin") >= 0) {
+  if(message.text.toLowerCase().indexOf("milloin") >= 0) {
 
   } else {
     var messageContent = "Pahoittelut, ongelma!";
