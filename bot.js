@@ -99,7 +99,20 @@ function receivedMessage(event) {
     stripped = stripped.replace(/nimipäivä/g, '');
     console.log(stripped);
     stripped = stripped.replace(/ on/g, '');
-    stripped = stripped.replace(/ /g, '');
+    stripped = stripped.replace(/\s+/g, '');
+    var attempt = "";
+    var lastChar = stripped.charAt(stripped.length-1);
+    if(lastChar == "n") {
+      console.log("genetiivi");
+      attempt = stripped.slice(0, stripped.length-1);
+      console.log(attempt);
+      var letter = attempt[attempt.length-2];
+      console.log("3rd letter from end: " + letter);
+      if(letter == "k" || letter == "p" || letter == "t") {
+        console.log("match");
+        // todo duplicate
+      }
+    }
 
     console.log(stripped);
 
@@ -165,7 +178,7 @@ function sendNameBasedMessage(name, senderID) {
       console.error("Unable to receive nameday info.");
       console.error(response);
       console.error(error);
-      sendTextMessage(senderID, ("Koitin etsiä nimellä " + name + " mutta sitä ei löytynyt. :/"));
+      sendTextMessage(senderID, ("Koitin etsiä nimellä '" + name.charAt(0).toUpperCase() + name.slice(1) + "' mutta sitä ei löytynyt. :/"));
     }
   });
 }
