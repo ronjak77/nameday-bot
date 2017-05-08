@@ -136,7 +136,7 @@ function receivedMessage(event) {
             }
           });
         } else {
-          sendDateBasedMessage(chronoDate);
+          sendDateBasedMessage(chronoDate, senderID);
         }
       } else {
         console.error("Unable to receive translation.");
