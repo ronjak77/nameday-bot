@@ -90,7 +90,9 @@ function receivedMessage(event) {
   console.log(JSON.stringify(message));
 
   if(message.text.toLowerCase().indexOf("milloin") >= 0) {
-
+    console.log("Nimen kysyntä");
+  } else if(message.text.match(/([0-9.])+/g) != null) {
+    console.log("suoraan päivämäärällä");
   } else {
     var messageContent = "Pahoittelut, ongelma!";
 
@@ -109,10 +111,8 @@ function receivedMessage(event) {
         var chronoDate = chrono.parseDate(JSONresp.data.translations[0].translatedText);
 
         if(chronoDate == null) {
-          chronoDate = new Date();
-
           request({
-            uri: 'https://nimiapi.herokuapp.com/nimi' + message.text,
+            uri: 'https://nimiapi.herokuapp.com/nimi/' + message.text,
             qs: {
               api_key: process.env.NAME_API_KEY
             }
@@ -129,7 +129,7 @@ function receivedMessage(event) {
               console.error("Unable to receive nameday info.");
               console.error(response);
               console.error(error);
-              sendTextMessage(senderID, "Virhe nimipäivätietojen haussa!");
+              sendTextMessage(senderID, "Virhe päivän tulkinnassa ja nimen haussa!");
             }
           });
 
