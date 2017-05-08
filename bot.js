@@ -91,11 +91,12 @@ function receivedMessage(event) {
 
   if(message.text.toLowerCase().indexOf("milloin") >= 0) {
     console.log("Nimen kysyntä");
+    // todo
   } else if(message.text.match(/([0-9][.][0-9])+/g) != null) {
     var month = message.text.split('.')[0];
     var day = message.text.split('.')[1];
     if( 0 < month < 13 ) {
-      var parseString = month + " " + day + " 2014";
+      var parseString = day + " " + month + " 2014";
       var chronoDate = new Date(parseString);
     }
     sendDateBasedMessage(chronoDate, senderID);
@@ -119,7 +120,7 @@ function receivedMessage(event) {
 
         if(chronoDate == null) {
           request({
-            uri: 'https://nimiapi.herokuapp.com/nimi/' + message.text,
+            uri: 'https://nimiapi.herokuapp.com/name/' + message.text,
             qs: {
               api_key: process.env.NAME_API_KEY
             }
