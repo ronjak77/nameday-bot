@@ -95,8 +95,8 @@ finnishDateParser.extract = function(text, ref, match, opt) {
         text: match[0],
         index: match.index,
         start: {
-            day: 25,
-            month: 12,
+            day: match.input,
+            month: match.input,
         }
     });
 }
@@ -163,14 +163,15 @@ function receivedMessage(event) {
 
     sendNameBasedMessage(stripped, senderID);
 
-  } else if(message.text.match(/([0-9][.][0-9])+/g) != null) {
-    var month = message.text.split('.')[0];
-    var day = message.text.split('.')[1];
-    if( 0 < month < 13 ) {
-      var parseString = day + " " + month + " 2014";
-      var chronoDate = new Date(parseString);
-    }
-    sendDateBasedMessage(chronoDate, senderID);
+  }
+  // else if(message.text.match(/([0-9][.][0-9])+/g) != null) {
+  //   var month = message.text.split('.')[0];
+  //   var day = message.text.split('.')[1];
+  //   if( 0 < month < 13 ) {
+  //     var parseString = day + " " + month + " 2014";
+  //     var chronoDate = new Date(parseString);
+  //   }
+  //   sendDateBasedMessage(chronoDate, senderID);
 
   } else {
     var messageContent = "Pahoittelut, ongelma!";
@@ -188,8 +189,9 @@ function receivedMessage(event) {
         console.log("translation data:" + JSONresp.data.translations[0].translatedText);
 
         var chronoDate = custom.parseDate(JSONresp.data.translations[0].translatedText);
+        console.log(chronoDate);
 
-        if(chronoDate == null) {
+        if(chronoDate == null || isNaN(chronoDate)) {
           sendNameBasedMessage(message.text, senderID);
         } else {
           sendDateBasedMessage(chronoDate, senderID);
