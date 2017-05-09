@@ -163,16 +163,6 @@ function receivedMessage(event) {
 
     sendNameBasedMessage(stripped, senderID);
 
-  }
-  // else if(message.text.match(/([0-9][.][0-9])+/g) != null) {
-  //   var month = message.text.split('.')[0];
-  //   var day = message.text.split('.')[1];
-  //   if( 0 < month < 13 ) {
-  //     var parseString = day + " " + month + " 2014";
-  //     var chronoDate = new Date(parseString);
-  //   }
-  //   sendDateBasedMessage(chronoDate, senderID);
-
   } else {
     var messageContent = "Pahoittelut, ongelma!";
 
