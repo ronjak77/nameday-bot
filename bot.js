@@ -88,33 +88,30 @@ finnishDateParser.extract = function(text, ref, match, opt) {
     console.log(text);
     console.log(ref);
     console.log(match);
-    console.log(opt);
-    // Return a parsed result, that is 25 December
+    var parsedDay = match[0].split('.')[0];
+    var parsedMonth = match[0].split('.')[1];
+    console.log(888, parsedDay, parsedMonth);
+
     return new chrono.ParsedResult({
         ref: ref,
         text: match[0],
         index: match.index,
         start: {
-            day: match[0].split('.')[0],
-            month: match[0].split('.')[1],
+            day: parsedDay,
+            month: parsedMonth,
         }
     });
 }
 
 var christmasParser = new chrono.Parser();
-christmasParser.pattern = function () { return /Christmas/i }
+christmasParser.pattern = function () { return /jouluaatto/i }
 christmasParser.extract = function(text, ref, match, opt) {
-    console.log(5,text);
-    console.log(5,ref);
-    console.log(5,match);
-    console.log(5,opt);
-    // Return a parsed result, that is 25 December
     return new chrono.ParsedResult({
         ref: ref,
         text: match[0],
         index: match.index,
         start: {
-            day: 25,
+            day: 24,
             month: 12,
         }
     });
