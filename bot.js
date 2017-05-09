@@ -41,35 +41,35 @@ finnishDateParser.extract = function(text, ref, match, opt) {
 
     return new chrono.ParsedResult({
         ref: ref,
-        text: match[0],
+        text: text,
         index: match.index,
         start: {
-            day: 24,
-            month: 12,
+            day: parsedDay,
+            month: parsedMonth,
         }
     });
 }
 
-var christmasParser = new chrono.Parser();
-christmasParser.pattern = function () { return /jouluaatto/i }
-christmasParser.extract = function(text, ref, match, opt) {
-    return new chrono.ParsedResult({
-        ref: ref,
-        text: match[0],
-        index: match.index,
-        start: {
-            day: 24,
-            month: 12,
-        }
-    });
-}
+// var christmasParser = new chrono.Parser();
+// christmasParser.pattern = function () { return /jouluaatto/i }
+// christmasParser.extract = function(text, ref, match, opt) {
+//     return new chrono.ParsedResult({
+//         ref: ref,
+//         text: match[0],
+//         index: match.index,
+//         start: {
+//             day: 24,
+//             month: 12,
+//         }
+//     });
+// }
 
 // Create a new custom Chrono. The initial pipeline 'option' can also be specified as
 // - new chrono.Chrono(exports.options.strictOption())
 // - new chrono.Chrono(exports.options.casualOption())
 var custom = new chrono.Chrono();
 custom.parsers.push(finnishDateParser);
-custom.parsers.push(christmasParser);
+// custom.parsers.push(christmasParser);
 
 // Webhook validation
 app.get('/webhook', function(req, res) {
