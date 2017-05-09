@@ -81,7 +81,7 @@ Date.prototype.addDays = function(days) {
 var finnishDateParser = new chrono.Parser();
 
 // Provide search pattern
-finnishDateParser.pattern = function () { return /Christmas/i }
+finnishDateParser.pattern = function () { return /([0-9][.][0-9])+/g }
 
 // This function will be called when matched pattern is found
 finnishDateParser.extract = function(text, ref, match, opt) {
