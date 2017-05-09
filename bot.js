@@ -44,8 +44,8 @@ finnishDateParser.extract = function(text, ref, match, opt) {
         text: match[0],
         index: match.index,
         start: {
-            day: parsedDay,
-            month: parsedMonth,
+            day: 24,
+            month: 12,
         }
     });
 }
