@@ -88,8 +88,8 @@ finnishDateParser.extract = function(text, ref, match, opt) {
     console.log(text);
     console.log(ref);
     console.log(match);
-    var parsedDay = match[0].split('.')[0];
-    var parsedMonth = match[0].split('.')[1];
+    var parsedDay = parseInt(match[0].split('.')[0], 10);
+    var parsedMonth = parseInt(match[0].split('.')[1], 10);
     console.log(888, parsedDay, parsedMonth);
 
     return new chrono.ParsedResult({
