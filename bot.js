@@ -17,59 +17,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// Webhook validation
-app.get('/webhook', function(req, res) {
-  if (req.query['hub.mode'] === 'subscribe' &&
-      req.query['hub.verify_token'] === process.env.VERIFY_TOKEN) {
-    console.log("Validating webhook");
-    res.status(200).send(req.query['hub.challenge']);
-  } else {
-    console.error("Failed validation. Make sure the validation tokens match.");
-    res.sendStatus(403);
-  }
-});
-
-// Display the web page
-app.get('/', function(req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write(messengerButton);
-  res.end();
-});
-
-// Message processing
-app.post('/webhook', function (req, res) {
-  console.log(req.body);
-  var data = req.body;
-
-  // Make sure this is a page subscription
-  if (data.object === 'page') {
-
-    // Iterate over each entry - there may be multiple if batched
-    data.entry.forEach(function(entry) {
-      var pageID = entry.id;
-      var timeOfEvent = entry.time;
-
-      // Iterate over each messaging event
-      entry.messaging.forEach(function(event) {
-        if (event.message) {
-          receivedMessage(event);
-        } else if (event.postback) {
-          receivedPostback(event);
-        } else {
-          console.log("Webhook received unknown event: ", event);
-        }
-      });
-    });
-
-    // Assume all went well.
-    //
-    // You must send back a 200, within 20 seconds, to let us know
-    // you've successfully received the callback. Otherwise, the request
-    // will time out and we will keep trying to resend.
-    res.sendStatus(200);
-  }
-});
-
 
 Date.prototype.addDays = function(days) {
   var dat = new Date(this.valueOf());
@@ -123,7 +70,59 @@ christmasParser.extract = function(text, ref, match, opt) {
 var custom = new chrono.Chrono();
 custom.parsers.push(finnishDateParser);
 custom.parsers.push(christmasParser);
-console.log("Chrono:" + chrono);
+
+// Webhook validation
+app.get('/webhook', function(req, res) {
+  if (req.query['hub.mode'] === 'subscribe' &&
+      req.query['hub.verify_token'] === process.env.VERIFY_TOKEN) {
+    console.log("Validating webhook");
+    res.status(200).send(req.query['hub.challenge']);
+  } else {
+    console.error("Failed validation. Make sure the validation tokens match.");
+    res.sendStatus(403);
+  }
+});
+
+// Display the web page
+app.get('/', function(req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(messengerButton);
+  res.end();
+});
+
+// Message processing
+app.post('/webhook', function (req, res) {
+  console.log(req.body);
+  var data = req.body;
+
+  // Make sure this is a page subscription
+  if (data.object === 'page') {
+
+    // Iterate over each entry - there may be multiple if batched
+    data.entry.forEach(function(entry) {
+      var pageID = entry.id;
+      var timeOfEvent = entry.time;
+
+      // Iterate over each messaging event
+      entry.messaging.forEach(function(event) {
+        if (event.message) {
+          receivedMessage(event);
+        } else if (event.postback) {
+          receivedPostback(event);
+        } else {
+          console.log("Webhook received unknown event: ", event);
+        }
+      });
+    });
+
+    // Assume all went well.
+    //
+    // You must send back a 200, within 20 seconds, to let us know
+    // you've successfully received the callback. Otherwise, the request
+    // will time out and we will keep trying to resend.
+    res.sendStatus(200);
+  }
+});
 
 // Incoming events handling
 function receivedMessage(event) {
@@ -176,7 +175,7 @@ function receivedMessage(event) {
         console.log("translation data:" + JSONresp.data.translations[0].translatedText);
 
         var chronoDate = custom.parseDate(JSONresp.data.translations[0].translatedText);
-        console.log(chronoDate);
+        console.log(76, chronoDate);
 
         if(chronoDate == null || isNaN(chronoDate)) {
           sendNameBasedMessage(message.text, senderID);
