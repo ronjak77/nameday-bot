@@ -24,29 +24,23 @@ Date.prototype.addDays = function(days) {
   return dat;
 }
 
-
 var finnishDateParser = new chrono.Parser();
 
-// Provide search pattern
 finnishDateParser.pattern = function () { return /[0-9][.][0-9]/ }
 
-// This function will be called when matched pattern is found
 finnishDateParser.extract = function(text, ref, match, opt) {
-  console.log(text);
-  console.log(ref);
-  console.log(match);
   var parsedDay = parseInt(match[0].split('.')[0], 10);
   var parsedMonth = parseInt(match[0].split('.')[1], 10);
   console.log(888, parsedDay, parsedMonth);
 
   return new chrono.ParsedResult({
-      ref: ref,
-      text: text,
-      index: match.index,
-      start: {
-          day: parsedDay,
-          month: parsedMonth,
-      }
+    ref: ref,
+    text: text,
+    index: match.index,
+    start: {
+        day: parsedDay,
+        month: parsedMonth,
+    }
   });
 }
 
@@ -54,19 +48,16 @@ var christmasParser = new chrono.Parser();
 christmasParser.pattern = function () { return /christmas/i }
 christmasParser.extract = function(text, ref, match, opt) {
   return new chrono.ParsedResult({
-      ref: ref,
-      text: match[0],
-      index: match.index,
-      start: {
-          day: 24,
-          month: 12,
-      }
+    ref: ref,
+    text: match[0],
+    index: match.index,
+    start: {
+        day: 24,
+        month: 12,
+    }
   });
 }
 
-// Create a new custom Chrono. The initial pipeline 'option' can also be specified as
-// - new chrono.Chrono(exports.options.strictOption())
-// - new chrono.Chrono(exports.options.casualOption())
 var custom = new chrono.Chrono();
 custom.parsers.push(finnishDateParser);
 custom.parsers.push(christmasParser);
