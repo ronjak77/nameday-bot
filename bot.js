@@ -88,8 +88,6 @@ finnishDateParser.extract = function(text, ref, match, opt) {
     console.log(text);
     console.log(ref);
     console.log(match);
-    console.log(match[0].split('.')[0]);
-    console.log(match[0].split('.')[1]);
     console.log(opt);
     // Return a parsed result, that is 25 December
     return new chrono.ParsedResult({
@@ -97,8 +95,8 @@ finnishDateParser.extract = function(text, ref, match, opt) {
         text: match[0],
         index: match.index,
         start: {
-            day: match.input,
-            month: match.input,
+            day: match[0].split('.')[0],
+            month: match[0].split('.')[1],
         }
     });
 }
