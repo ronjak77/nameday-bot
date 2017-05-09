@@ -194,7 +194,7 @@ function sendNameBasedMessage(name, senderID) {
       var emoticon = emoticons[(Math.floor(Math.random() * emoticons.length))];
       var phrase = jsonBody.name + " viettää nimipäiviään " + jsonBody.resultMsg;
       if(jsonBody.other_names.length >0) {
-        phrase = phrase + " Myös " + other_names.join(', ') + " juhlivat silloin.";
+        phrase = phrase + " Myös " + jsonBody.other_names.join(', ') + " juhlivat silloin.";
       }
 
       messageContent = phrase + emoticon;
