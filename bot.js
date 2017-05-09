@@ -64,7 +64,7 @@ christmasParser.extract = function(text, ref, match, opt) {
     });
 }
 
-Create a new custom Chrono. The initial pipeline 'option' can also be specified as
+// Create a new custom Chrono. The initial pipeline 'option' can also be specified as
 // - new chrono.Chrono(exports.options.strictOption())
 // - new chrono.Chrono(exports.options.casualOption())
 var custom = new chrono.Chrono();
