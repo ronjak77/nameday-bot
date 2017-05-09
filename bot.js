@@ -78,6 +78,37 @@ Date.prototype.addDays = function(days) {
 }
 
 
+var finnishDateParser = new chrono.Parser();
+
+// Provide search pattern
+finnishDateParser.pattern = function () { return /Christmas/i }
+
+// This function will be called when matched pattern is found
+finnishDateParser.extract = function(text, ref, match, opt) {
+    console.log(text);
+    console.log(ref);
+    console.log(match);
+    console.log(opt);
+    // Return a parsed result, that is 25 December
+    return new chrono.ParsedResult({
+        ref: ref,
+        text: match[0],
+        index: match.index,
+        start: {
+            day: 25,
+            month: 12,
+        }
+    });
+}
+
+// Create a new custom Chrono. The initial pipeline 'option' can also be specified as
+// - new chrono.Chrono(exports.options.strictOption())
+// - new chrono.Chrono(exports.options.casualOption())
+var custom = new chrono.Chrono();
+custom.parsers.push(finnishDateParser);
+
+
+
 // Incoming events handling
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -90,31 +121,19 @@ function receivedMessage(event) {
   console.log(JSON.stringify(message));
 
   if(message.text.toLowerCase().indexOf("milloin") >= 0) {
-    console.log("Nimen kysyntä");
-    // todo
     var stripped = message.text.toLowerCase().replace(/milloin/g, '');
-    console.log(stripped);
     stripped = stripped.replace(/nimipäivät/g, '');
-    console.log(stripped);
     stripped = stripped.replace(/nimipäivä/g, '');
-    console.log(stripped);
     stripped = stripped.replace(/ on/g, '');
     stripped = stripped.replace(/\s+/g, '');
     var attempt = "";
     var lastChar = stripped.charAt(stripped.length-1);
     if(lastChar == "n") {
-      console.log("genetiivi");
       attempt = stripped.slice(0, stripped.length-1);
-      console.log(attempt);
       var letter = attempt[attempt.length-2];
-      console.log("3rd letter from end: " + letter);
       if(letter == "k" || letter == "p" || letter == "t") {
-        console.log("match");
-        // todo duplicate
         var firstpart = attempt.substring(0, attempt.length-1);
-        console.log("firstpart " + firstpart)
         firstpart = firstpart + letter + attempt[attempt.length-1];
-        console.log(firstpart);
         stripped = firstpart;
       } else {
         stripped = attempt;
