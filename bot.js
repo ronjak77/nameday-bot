@@ -81,12 +81,9 @@ Date.prototype.addDays = function(days) {
 var finnishDateParser = new chrono.Parser();
 
 // Provide search pattern
-finnishDateParser.pattern = function () { return /([0-9][.][0-9])+/g }
-// finnishDateParser.pattern = function () { return /Christmas/i }
-
+finnishDateParser.pattern = function () { return /([0-9][.][0-9])/ }
 
 // This function will be called when matched pattern is found
-console.log("Chrono:" + chrono);
 finnishDateParser.extract = function(text, ref, match, opt) {
     console.log(text);
     console.log(ref);
@@ -104,11 +101,31 @@ finnishDateParser.extract = function(text, ref, match, opt) {
     });
 }
 
+var christmasParser = new chrono.Parser();
+christmasParser.pattern = function () { return /Christmas/i }
+christmasParser.extract = function(text, ref, match, opt) {
+    console.log(5,text);
+    console.log(5,ref);
+    console.log(5,match);
+    console.log(5,opt);
+    // Return a parsed result, that is 25 December
+    return new chrono.ParsedResult({
+        ref: ref,
+        text: match[0],
+        index: match.index,
+        start: {
+            day: 25,
+            month: 12,
+        }
+    });
+}
+
 // Create a new custom Chrono. The initial pipeline 'option' can also be specified as
 // - new chrono.Chrono(exports.options.strictOption())
 // - new chrono.Chrono(exports.options.casualOption())
 var custom = new chrono.Chrono();
 custom.parsers.push(finnishDateParser);
+custom.parsers.push(christmasParser);
 console.log("Chrono:" + chrono);
 
 // Incoming events handling
@@ -212,7 +229,7 @@ function sendNameBasedMessage(name, senderID) {
 }
 
 function sendDateBasedMessage(chronoDate, senderID) {
-  if(chronoDate == null) {
+  if(chronoDate == null || isNaN(chronoDate) ) {
     sendTextMessage(senderID, "Virhe päivätietojen haussa!");
   };
   var cmonth = chronoDate.getMonth() + 1;
