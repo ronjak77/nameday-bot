@@ -88,6 +88,8 @@ finnishDateParser.extract = function(text, ref, match, opt) {
     console.log(text);
     console.log(ref);
     console.log(match);
+    console.log(match[0].split('.')[0]);
+    console.log(match[0].split('.')[1]);
     console.log(opt);
     // Return a parsed result, that is 25 December
     return new chrono.ParsedResult({
@@ -188,8 +190,6 @@ function receivedMessage(event) {
         }
       } else {
         console.error("Unable to receive translation.");
-        console.error(response);
-        console.error(error);
       }
     });
   }
@@ -213,8 +213,6 @@ function sendNameBasedMessage(name, senderID) {
       sendTextMessage(senderID, messageContent);
     } else {
       console.error("Unable to receive nameday info.");
-      console.error(response);
-      console.error(error);
       sendTextMessage(senderID, ("Koitin etsiä nimellä '" + name.charAt(0).toUpperCase() + name.slice(1) + "' mutta sitä ei löytynyt. :/"));
     }
   });
