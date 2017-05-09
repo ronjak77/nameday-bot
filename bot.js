@@ -107,10 +107,9 @@ finnishDateParser.extract = function(text, ref, match, opt) {
 // Create a new custom Chrono. The initial pipeline 'option' can also be specified as
 // - new chrono.Chrono(exports.options.strictOption())
 // - new chrono.Chrono(exports.options.casualOption())
-// var custom = new chrono.Chrono();
-chrono.parsers.push(finnishDateParser);
-// chrono = custom;
-// console.log("Chrono:" + chrono);
+var custom = new chrono.Chrono();
+custom.parsers.push(finnishDateParser);
+console.log("Chrono:" + chrono);
 
 // Incoming events handling
 function receivedMessage(event) {
@@ -171,7 +170,7 @@ function receivedMessage(event) {
         var JSONresp = JSON.parse(body);
         console.log("translation data:" + JSONresp.data.translations[0].translatedText);
 
-        var chronoDate = chrono.parseDate(JSONresp.data.translations[0].translatedText);
+        var chronoDate = custom.parseDate(JSONresp.data.translations[0].translatedText);
 
         if(chronoDate == null) {
           sendNameBasedMessage(message.text, senderID);
