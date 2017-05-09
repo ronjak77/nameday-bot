@@ -86,6 +86,7 @@ finnishDateParser.pattern = function () { return /Christmas/i }
 
 
 // This function will be called when matched pattern is found
+console.log("Chrono:" + chrono);
 finnishDateParser.extract = function(text, ref, match, opt) {
     console.log(text);
     console.log(ref);
@@ -106,10 +107,10 @@ finnishDateParser.extract = function(text, ref, match, opt) {
 // Create a new custom Chrono. The initial pipeline 'option' can also be specified as
 // - new chrono.Chrono(exports.options.strictOption())
 // - new chrono.Chrono(exports.options.casualOption())
-var custom = new chrono.Chrono();
-custom.parsers.push(finnishDateParser);
-chrono = custom;
-
+// var custom = new chrono.Chrono();
+chrono.parsers.push(finnishDateParser);
+// chrono = custom;
+// console.log("Chrono:" + chrono);
 
 // Incoming events handling
 function receivedMessage(event) {
