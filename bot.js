@@ -106,7 +106,7 @@ finnishDateParser.extract = function(text, ref, match, opt) {
 // - new chrono.Chrono(exports.options.casualOption())
 var custom = new chrono.Chrono();
 custom.parsers.push(finnishDateParser);
-
+chrono = custom;
 
 
 // Incoming events handling
