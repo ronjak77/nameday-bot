@@ -218,7 +218,7 @@ function sendDateBasedMessage(chronoDate, senderID) {
   var cmonth = chronoDate.getMonth() + 1;
   var cdate = chronoDate.getDate();
   var messageContent = "";
-
+  console.log('https://nimiapi.herokuapp.com/' + cmonth + "/" + cdate);
   request({
     uri: 'https://nimiapi.herokuapp.com/' + cmonth + "/" + cdate,
     qs: {
@@ -237,8 +237,6 @@ function sendDateBasedMessage(chronoDate, senderID) {
       sendTextMessage(senderID, messageContent);
     } else {
       console.error("Unable to receive nameday info.");
-      console.error(response);
-      console.error(error);
       sendTextMessage(senderID, "Virhe nimipäivätietojen haussa!");
     }
   });
