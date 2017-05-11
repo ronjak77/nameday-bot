@@ -200,6 +200,7 @@ function sendNameBasedMessage(name, senderID) {
         }
         phrase = phrase + " Myös " + jsonBody.other_names.join(', ') + restOfThePhrase + " silloin.";
       }
+      console.log(6767, jsonBody.celebrations);
       if(jsonBody.celebrations.length >0) {
         phrase = phrase + " 🇫🇮 Silloin on myös liputuspäivä: " + jsonBody.celebrations + " 🇫🇮";
       }
