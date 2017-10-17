@@ -214,7 +214,7 @@ function sendNameBasedMessage(name, senderID) {
 
 function sendDateBasedMessage(chronoDate, senderID) {
   if(chronoDate == null || isNaN(chronoDate) ) {
-    sendTextMessage(senderID, "Virhe päivätietojen haussa!");
+    sendTextMessage(senderID, "Virhe nimipäivätietojen haussa!");
   };
   var cmonth = chronoDate.getMonth() + 1;
   var cdate = chronoDate.getDate();
