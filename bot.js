@@ -83,7 +83,6 @@ app.get('/', function(req, res) {
 
 // Message processing
 app.post('/webhook', function (req, res) {
-  console.log(req.body);
   var data = req.body;
 
   // Make sure this is a page subscription
@@ -200,7 +199,6 @@ function sendNameBasedMessage(name, senderID) {
         }
         phrase = phrase + " Myös " + jsonBody.other_names.join(', ') + restOfThePhrase + " silloin.";
       }
-      console.log(6767, jsonBody.celebrations);
       if(jsonBody.celebrations.length >0) {
         phrase = phrase + " 🇫🇮 Silloin on myös liputuspäivä: " + jsonBody.celebrations + " 🇫🇮";
       }
@@ -221,7 +219,6 @@ function sendDateBasedMessage(chronoDate, senderID) {
   var cmonth = chronoDate.getMonth() + 1;
   var cdate = chronoDate.getDate();
   var messageContent = "";
-  console.log('https://nimiapi.herokuapp.com/' + cmonth + "/" + cdate);
   request({
     uri: 'https://nimiapi.herokuapp.com/' + cmonth + "/" + cdate,
     qs: {
