@@ -145,8 +145,6 @@ function receivedMessage(event) {
       }
     }
 
-    console.log(stripped);
-
     sendNameBasedMessage(stripped, senderID);
 
   } else {
@@ -162,11 +160,7 @@ function receivedMessage(event) {
     }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var JSONresp = JSON.parse(body);
-        console.log("translation data:" + JSONresp.data.translations[0].translatedText);
-
         var chronoDate = custom.parseDate(JSONresp.data.translations[0].translatedText + " is who");
-        console.log(76, chronoDate);
-
         if(chronoDate == null || isNaN(chronoDate)) {
           sendNameBasedMessage(message.text, senderID);
         } else {
